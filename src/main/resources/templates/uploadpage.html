@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Upload Page</title>
+
+<script>
+function redirectURL(fileName) {
+
+		  // Trigger the first redirect
+		  redirectFirst(fileName);
+
+		  // Trigger the second redirect after a delay
+		  setTimeout(function() {
+			    redirectSecond();
+			  }, 1000);
+  }
+  function redirectFirst(fileName) {
+	    // Redirect to the first page
+	    window.location.href = "/downloadfile/"+fileName;
+	    
+	  }
+  function redirectSecond() {
+      window.location.href = "/redirectsuccess";
+      
+  }
+
+</script>
+</head>
+<body>
+
+<form action="#"
+th:object="${contact}"
+enctype="multipart/form-data"
+method="post"
+th:action="@{/fileupload}">
+	Upload File Here: <input type="file" placeholder="Filename" name="file"/>
+	<br><br>
+	<input type="submit" value="upload"></input>
+</form>
+<br><br>
+
+<span th:if="${fileName}!=''" th:text="${fileName}"></span>
+<button th:if="${fileName}!=''" type="button" id="submitButton" th:onclick="redirectURL([[${fileName}]])">Download</button>
+
+</body>
+</html>
